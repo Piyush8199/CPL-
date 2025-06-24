@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+#define MAX_COLOR 101
+
+int main() {
+int n, color;
+int count[MAX_COLOR] = {0}; // Initialize all color counts to 0
+int total_pairs = 0;
+
+scanf("%d", &n);
+
+for (int i = 0; i < n; i++) {
+scanf("%d", &color);
+count[color]++;
+}
+
+for (int i = 1; i < MAX_COLOR; i++) {
+total_pairs += count[i] / 2;
+}
+printf("%d\n", total_pairs);
+
+return 0;
+}
