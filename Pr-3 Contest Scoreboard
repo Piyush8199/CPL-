@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct {
+int id;
+int solved;
+int penalty;
+int attempted;
+int solved_problems[10];
+int penalty_problems[10];
+} Contestant;
+
+int compare(const void *a, const void *b) {
+Contestant *c1 = (Contestant *)a;
+Contestant *c2 = (Contestant *)b;
+if (c1->solved != c2->solved)
+return c2->solved - c1->solved;
+if (c1->penalty != c2->penalty)
+return c1->penalty - c2->penalty;
+return c1->id - c2->id;
+}
+
+int main() {
+int t;
+scanf("%d", &t);
+getchar(); 
+getchar(); 
+
+while (t--) {
+Contestant c[101] = {0};
+char line[100];
+
+while (fgets(line, sizeof(line), stdin)) {
+if (line[0] == '\n' || line[0] == '\0') break;
+
+int id, prob, time;
+char result;
+scanf(line, "%d %d %d %c", &id, &prob, &time, &result);
+
+if (!c[id].attempted) {
+c[id].id = id;
+c[id].attempted = 1;
+}
+
+if (result == 'C') {
+if (!c[id].solved_problems[prob]) {
+c[id].solved++;
+c[id].penalty += time + c[id].penalty_problems[prob] * 20;
+c[id].solved_problems[prob] = 1;
+}
+} else if (result == 'I') {
+if (!c[id].solved_problems[prob])
+c[id].penalty_problems[prob]++;
+}
+}
+
+qsort(c, 101, sizeof(Contestant), compare);
+for (int i = 0; i < 101; i++) {
+if (c[i].attempted)
+printf("%d %d %d\n", c[i].id, c[i].solved, c[i].penalty);
+}
+if (t) printf("\n");
+}
+return 0;
+}
