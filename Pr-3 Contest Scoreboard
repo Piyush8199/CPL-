@@ -36,7 +36,7 @@ if (line[0] == '\n' || line[0] == '\0') break;
 
 int id, prob, time;
 char result;
-scanf(line, "%d %d %d %c", &id, &prob, &time, &result);
+sscanf(line, "%d %d %d %c", &id, &prob, &time, &result);
 
 if (!c[id].attempted) {
 c[id].id = id;
