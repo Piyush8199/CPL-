@@ -4,7 +4,7 @@
 
 int main() {
 int n, color;
-int count[MAX_COLOR] = {0}; // Initialize all color counts to 0
+int count[MAX_COLOR] = {0};
 int total_pairs = 0;
 
 scanf("%d", &n);
