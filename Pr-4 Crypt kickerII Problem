@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+char target[] = "the quick brown fox jumps over the lazy dog";
+
+int build_mapping(char *cipher, char *map) {
+int enc[256] = {0}, dec[256] = {0};
+if (strlen(cipher) != strlen(target)) return 0;
+
+for (int i = 0; cipher[i]; i++) {
+char c1 = cipher[i], c2 = target[i];
+if (c1 == ' ' && c2 == ' ') continue;
+if (map[c1]) {
+if (map[c1] != c2) return 0;
+} else {
+if (dec[c2]) return 0;
+map[c1] = c2;
+dec[c2] = 1;
+}
+}
+return 1;
+}
+
+void decrypt(char *line, char *map) {
+for (int i = 0; line[i]; i++) {
+if (line[i] == ' ') putchar(' ');
+else if (map[line[i]]) putchar(map[line[i]]);
+else putchar('*');
+}
+putchar('\n');
+}
+
+int main() {
+int t;
+char line[100], lines[MAX][100];
+scanf("%d\n", &t);
+fgets(line, sizeof(line), stdin);
+
+while (t--) {
+int n = 0;
+while (fgets(lines[n], sizeof(lines[n]), stdin)) {
+if (strcmp(lines[n], "\n") == 0) break;
+lines[n][strcspn(lines[n], "\n")] = '\0';
+n++;
+}
+
+int found = 0;
+char map[256] = {0};
+for (int i = 0; i < n; i++) {
+char temp[256] = {0};
+if (build_mapping(lines[i], temp)) {
+memcpy(map, temp, sizeof(temp));
+found = 1;
+break;
+}
+}
+
+if (!found) {
+puts("No solution.");
+} else {
+for (int i = 0; i < n; i++) decrypt(lines[i], map);
+}
+
+if (t) puts("");
+}
+
+return 0;
+}
