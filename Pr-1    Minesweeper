@@ -3,40 +3,41 @@
 #define MAX 100
 
 int main() {
-    int field_number = 1;
-    int n, m;
-    char field[MAX][MAX];
+int field_number = 1;
+int n, m;
+char field[MAX][MAX];
 
-    int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-    int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-    while (scanf("%d %d", &n, &m), n || m) {
-        getchar(); // consume newline
-        for (int i = 0; i < n; i++) {
-            fgets(field[i], MAX, stdin);
-        }
+while (scanf("%d %d", &n, &m), n || m) {
+getchar(); 
+for (int i = 0; i < n; i++) {
+fgets(field[i], MAX, stdin);
+}
 
-        if (field_number > 1) printf("\n");
-        printf("Field #%d:\n", field_number++);
+if (field_number > 1) printf("\n");
+printf("Field #%d:\n", field_number++);
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (field[i][j] == '*') {
-                    printf("*");
-                } else {
-                    int count = 0;
-                    for (int k = 0; k < 8; k++) {
-                        int ni = i + dx[k];
-                        int nj = j + dy[k];
-                        if (ni >= 0 && ni < n && nj >= 0 && nj < m && field[ni][nj] == '*')
-                            count++;
-                    }
-                    printf("%d", count);
-                }
-            }
-            printf("\n");
-        }
-    }
-    return 0;
+for (int i = 0; i < n; i++) {
+for (int j = 0; j < m; j++) {
+if (field[i][j] == '*') {
+printf("*");
+} 
+else {
+int count = 0;
+for (int k = 0; k < 8; k++) {
+int ni = i + dx[k];
+int nj = j + dy[k];
+if (ni >= 0 && ni < n && nj >= 0 && nj < m && field[ni][nj] == '*')
+count++;
+}
+printf("%d", count);
+}
+}
+printf("\n");
+}
+}
+return 0;
 }
 
