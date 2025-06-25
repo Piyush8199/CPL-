@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+unsigned long reverse_number(unsigned long n) {
+unsigned long rev = 0;
+while (n > 0) {
+rev = rev * 10 + n % 10;
+n /= 10;
+}
+return rev;
+}
+
+
+bool is_palindrome(unsigned long n) {
+return n == reverse_number(n);
+}
+
+int main() {
+int T;
+scanf("%d", &T);  
+
+while (T--) {
+unsigned long num;
+scanf("%lu", &num);  
+
+int count = 0;
+while (!is_palindrome(num) && count < 1000) {
+unsigned long rev = reverse_number(num);
+num += rev;
+count++;
+}
+
+printf("%d %lu\n", count, num);
+}
+
+return 0;
+}
+
+
+3
+195
+4 9339
+265
+5  45254
+750
+3  6666
