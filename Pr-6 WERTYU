@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+#include <string.h>
+
+
+int main() {
+
+char map[] = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./";
+
+char ch;
+
+while ((ch = getchar()) != EOF) {
+
+if (ch == ' ' || ch == '\n') {
+
+putchar(ch);
+
+} else {
+
+char *p = strchr(map, ch);
+
+if (p != NULL && p != map) {
+
+putchar(*(p - 1));
+
+} else {
+
+putchar(ch);
+
+}
+
+}
