@@ -53,3 +53,13 @@ getchar();
 
 return 0;
 }
+
+1        ← Number of test cases
+(blank line)
+
+4        ← Number of jobs
+3 4      ← Time, Fine (Job 1)
+1 1000   ← Time, Fine (Job 2)
+2 2      ← Job 3
+5 5      ← Job 4
+
