@@ -70,3 +70,12 @@ printf("Run #%d: Wrong Answer\n", run++);
 }
 return 0;
 }
+
+
+2                       ← 2 lines in standard output
+The answer is: 10       ← standard line 1
+The answer is: 5        ← standard line 2
+2                       ← 2 lines in team output
+The answer is: 10       ← team line 1
+The answer is: 5        ← team line 2
+
