@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LINES 100
+#define MAX_LEN 130
+
+
+void read_lines(char lines[][MAX_LEN], int count) {
+getchar(); 
+for (int i = 0; i < count; i++) {
+fgets(lines[i], MAX_LEN, stdin);
+lines[i][strcspn(lines[i], "\n")] = '\0'; 
+}
+}
+
+
+int is_exact_match(char std[][MAX_LEN], int n, char team[][MAX_LEN], int m) {
+if (n != m) return 0;
+for (int i = 0; i < n; i++) {
+if (strcmp(std[i], team[i]) != 0) return 0;
+}
+return 1;
+}
+
+
+void extract_digits(char lines[][MAX_LEN], int count, char *digits) {
+int idx = 0;
+for (int i = 0; i < count; i++) {
+for (int j = 0; lines[i][j]; j++) {
+if (isdigit((unsigned char)lines[i][j])) {
+digits[idx++] = lines[i][j];
+}
+}
+}
+digits[idx] = '\0';
+}
+
+int main() {
+int run = 1;
+while (1) {
+int n;
+scanf("%d", &n);
+if (n == 0) break;
+
+char std[MAX_LINES][MAX_LEN], team[MAX_LINES][MAX_LEN];
+read_lines(std, n);
+
+int m;
+scanf("%d", &m);
+read_lines(team, m);
+
+if (is_exact_match(std, n, team, m)) {
+printf("Run #%d: Accepted\n", run++);
+continue;
+}
+
+       
+char std_digits[MAX_LINES * MAX_LEN] = {0};
+char team_digits[MAX_LINES * MAX_LEN] = {0};
+
+extract_digits(std, n, std_digits);
+extract_digits(team, m, team_digits);
+
+if (strcmp(std_digits, team_digits) == 0) {
+printf("Run #%d: Presentation Error\n", run++);
+} else {
+printf("Run #%d: Wrong Answer\n", run++);
+}
+}
+return 0;
+}
