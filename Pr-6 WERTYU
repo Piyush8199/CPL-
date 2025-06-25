@@ -1,38 +1,28 @@
 #include <stdio.h>
-
 #include <string.h>
 
 
+const char *qwerty = "1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./"
+                     "QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?"; 
+
+
+char get_decoded_char(char c) {
+for (int i = 1; qwerty[i]; i++) {
+if (qwerty[i] == c)
+return qwerty[i - 1];
+}
+return c; 
+}
+
 int main() {
+char line[150];
 
-char map[] = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./";
 
-char ch;
-
-while ((ch = getchar()) != EOF) {
-
-if (ch == ' ' || ch == '\n') {
-
-putchar(ch);
-
-} else {
-
-char *p = strchr(map, ch);
-
-if (p != NULL && p != map) {
-
-putchar(*(p - 1));
-
-} else {
-
-putchar(ch);
-
+while (fgets(line, sizeof(line), stdin)) {
+for (int i = 0; line[i]; i++) {
+putchar(get_decoded_char(line[i]));
 }
-
-}
-
 }
 
 return 0;
-
 }
