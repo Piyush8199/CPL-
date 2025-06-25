@@ -1,1 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+typedef struct {
+int id;     
+int time;   
+int fine;   
+} Job;
+
+
+int compare(const void *a, const void *b) {
+Job *j1 = (Job *)a;
+Job *j2 = (Job *)b;
+
+   
+double ratio1 = (double)j1->fine / j1->time;
+double ratio2 = (double)j2->fine / j2->time;
+
+if (ratio1 < ratio2) return 1;  
+if (ratio1 > ratio2) return -1;
+
+return j1->id - j2->id; 
+}
+
+int main() {
+int t;
+scanf("%d", &t);
+getchar(); 
+getchar(); 
+
+while (t--) {
+int n;
+scanf("%d", &n);
+Job jobs[n];
+
+for (int i = 0; i < n; i++) {
+scanf("%d %d", &jobs[i].time, &jobs[i].fine);
+jobs[i].id = i + 1; 
+}
+
+qsort(jobs, n, sizeof(Job), compare);
+
+for (int i = 0; i < n; i++) {
+printf("%d", jobs[i].id);
+if (i < n - 1)
+printf(" ");
+}
+printf("\n");
+
+if (t > 0) printf("\n"); 
+getchar(); 
+}
+
+return 0;
+}
