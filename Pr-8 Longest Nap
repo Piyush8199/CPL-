@@ -1,1 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define START_DAY 600   
+#define END_DAY 1080    
+#define MAX_APPOINTMENTS 102
+
+typedef struct {
+int start;
+int end;
+} Appointment;
+
+int convert_to_minutes(char *time) {
+int h, m;
+sscanf(time, "%d:%d", &h, &m);
+return h * 60 + m;
+}
+
+void convert_to_hhmm(int minutes, int *hh, int *mm) {
+*hh = minutes / 60;
+*mm = minutes % 60;
+}
+
+int compare_appointments(const void *a, const void *b) {
+return ((Appointment*)a)->start - ((Appointment*)b)->start;
+}
+
+int main() {
+int day = 1;
+int s;
+
+while (scanf("%d\n", &s) != EOF) {
+Appointment appts[MAX_APPOINTMENTS];
+int total = 0;
+
+        
+appts[total].start = START_DAY;
+appts[total++].end = START_DAY;
+
+        
+for (int i = 0; i < s; i++) {
+char time1[6], time2[6], buffer[300];
+fgets(buffer, sizeof(buffer), stdin);
+
+sscanf(buffer, "%s %s", time1, time2);
+
+int start = convert_to_minutes(time1);
+int end = convert_to_minutes(time2);
+
+appts[total].start = start;
+appts[total++].end = end;
+}
+
+        
+appts[total].start = END_DAY;
+appts[total++].end = END_DAY;
+
+        
+qsort(appts, total, sizeof(Appointment), compare_appointments);
+
+int max_gap = 0, nap_start_time = 0;
+
+for (int i = 1; i < total; i++) {
+int gap = appts[i].start - appts[i - 1].end;
+if (gap > max_gap) {
+max_gap = gap;
+nap_start_time = appts[i - 1].end;
+}
+}
+
+        
+int hh, mm;
+convert_to_hhmm(nap_start_time, &hh, &mm);
+
+printf("Day #%d: the longest nap starts at %02d:%02d and will last for ", day++, hh, mm);
+
+if (max_gap >= 60) {
+printf("%d hours and %d minutes.\n", max_gap / 60, max_gap % 60);
+} else {
+printf("%d minutes.\n", max_gap);
+}
+}
+
+    return 0;
+}
+
+
+4
+10:00 12:00 Lectures
+12:00 13:00 Lunch, like always.
+13:00 15:00 Boring lectures...
+15:30 17:45 Reading
